@@ -1,13 +1,10 @@
 import mongoose from 'mongoose';
-const DirectMessageSchema = new mongoose.Schema({
-  workspaceId: { type: mongoose.Schema.Types.ObjectId, required: true },
-  participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  messages: [{
-    senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    content: String,
-    fileUrl: String,
-    timestamp: { type: Date, default: Date.now }
-  }]
-});
 
-module.exports.DirectMessage = mongoose.model('DirectMessage', DirectMessageSchema);
+const DirectMessageSchema = new mongoose.Schema({
+  threadId: { type: mongoose.Schema.Types.ObjectId, ref: 'DirectMessageThread', required: true },
+  sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  content: { type: String, default: '' },
+  files: [{ type: String }]
+}, { timestamps: true });
+
+export const DirectMessage = mongoose.model('DirectMessage', DirectMessageSchema);

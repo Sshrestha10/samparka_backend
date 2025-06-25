@@ -27,6 +27,9 @@ routes(app, express);
 // error handling middleware
 app.use(errorHandlingMiddleware);
 
+//for image folder
+app.use('/uploads', express.static('uploads'));
+
 // Expose app
 export default app;
 

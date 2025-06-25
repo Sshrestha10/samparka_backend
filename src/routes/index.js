@@ -11,6 +11,11 @@ import acceptInviteRouter from '../modules/workspace/acceptInvite/acceptInvite.r
 import declineInviteRouter from '../modules/workspace/declineInvite/declineInvite.route';
 import deleteWorkspaceRouter from '../modules/workspace/deleteWorkspace/deleteWorkspace.route';
 import leaveWorkspaceRouter from '../modules/workspace/leaveWorkspace/leaveWorkspace.route';
+import createChannelRouter from '../modules/channel/createChannel/createChannel.routes';
+import sendMessageRouter from '../modules/channel/sendMessage/sendMessage.route';
+import getChannelMessageRouter from '../modules/channel/getMessage/getMessage.route';
+import sendDMRouter from '../modules/dm/sendDm/sendDM.routes';
+import getDMRouter from '../modules/dm/getDm/getDM.routes';
 
 
 export default function routes(app, express) {
@@ -27,4 +32,10 @@ export default function routes(app, express) {
   app.use('/api/v1/workspace', declineInviteRouter(express, authMiddleware));
   app.use('/api/v1/workspace', deleteWorkspaceRouter(express, authMiddleware));
   app.use('/api/v1/workspace', leaveWorkspaceRouter(express, authMiddleware));
+  app.use('/api/v1/workspace', createChannelRouter(express, authMiddleware));
+  app.use('/api/v1/channel', sendMessageRouter(express, authMiddleware));
+  app.use('/api/v1/channel', getChannelMessageRouter(express, authMiddleware));
+  app.use('/api/v1/dm', sendDMRouter(express, authMiddleware));
+  app.use('/api/v1/dm', getDMRouter(express, authMiddleware));
+
 }
