@@ -1,0 +1,36 @@
+{
+  "name": "samparka",
+  "version": "1.0.0",
+  "keywords": [],
+  "author": "Swostika",
+  "license": "ISC",
+  "description": "Samparka's backend",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf build && mkdir build",
+    "build-server": "babel --out-dir ./build . --source-maps --copy-files --ignore 'node_modules/**/*.js'",
+    "build": "npm run clean && npm run build-server",
+    "dev": "NODE_ENV=development nodemon --exec babel-node app.js"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.27.6",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^2.2.0",
+    "compression": "^1.8.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.27.2",
+    "@babel/core": "^7.27.4",
+    "@babel/node": "^7.27.1",
+    "@babel/plugin-transform-runtime": "^7.27.4",
+    "@babel/preset-env": "^7.27.2",
+    "nodemon": "^3.1.10"
+  }
+}
