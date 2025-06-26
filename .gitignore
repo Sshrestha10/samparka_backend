@@ -3,5 +3,5 @@ RREADME.md
 node_modules
 package-lock.json
 .env
-build
 uploads
+build

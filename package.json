@@ -8,10 +8,10 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -rf build && mkdir build",
+    "clean": "rimraf build && mkdirp build",
     "build-server": "babel --out-dir ./build . --source-maps --copy-files --ignore 'node_modules/**/*.js'",
     "build": "npm run clean && npm run build-server",
-    "dev": "NODE_ENV=development nodemon --exec babel-node app.js"
+    "dev": "cross-env NODE_ENV=development nodemon --exec babel-node app.js"
   },
   "dependencies": {
     "@babel/runtime": "^7.27.6",
@@ -32,6 +32,9 @@
     "@babel/node": "^7.27.1",
     "@babel/plugin-transform-runtime": "^7.27.4",
     "@babel/preset-env": "^7.27.2",
-    "nodemon": "^3.1.10"
+    "cross-env": "^7.0.3",
+    "mkdirp": "^3.0.1",
+    "nodemon": "^3.1.10",
+    "rimraf": "^6.0.1"
   }
 }
