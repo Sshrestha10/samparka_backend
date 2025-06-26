@@ -6,6 +6,7 @@ export async function acceptInviteUsecase({ userId, workspaceId }) {
   if (!user) throw new Error('User not found');
 
   await workspaceRepository.acceptInviteForUser(workspaceId, user.email);
+  await workspaceRepository.markMemberAccepted(workspaceId, userId, user.email);
   await userRepository.markWorkspaceAccepted(userId, workspaceId);
 
   return { message: 'Workspace invitation accepted successfully' };

@@ -44,6 +44,18 @@ export const workspaceRepository = {
 
   async deleteWorkspace(workspaceId) {
     return Workspace.findByIdAndDelete(workspaceId);
+  },
+  async markMemberAccepted(workspaceId, userId, email) {
+    // Update the workspace member where email matches and set userId + accepted true
+    return Workspace.updateOne(
+      { _id: workspaceId, 'members.email': email },
+      { 
+        $set: {
+          'members.$.userId': userId,
+          'members.$.accepted': true
+        }
+      }
+    );
   }
 
 };

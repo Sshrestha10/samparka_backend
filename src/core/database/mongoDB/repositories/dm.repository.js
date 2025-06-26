@@ -3,26 +3,36 @@ import { DirectMessage } from '../models/directMessage.model.js';
 import { DirectMessageThread } from '../models/directMessage.thread.model.js';
 
 export const dmRepository = {
-  async findOrCreateThread({ workspaceId, userId, recipientId }) {
-    const userA = new mongoose.Types.ObjectId(userId);
-    const userB = new mongoose.Types.ObjectId(recipientId);
-
-    const members = [userA, userB].sort();
-
-    let thread = await DirectMessageThread.findOne({
+ async findThread({ workspaceId, userA, userB }) {
+  if (userA.toString() === userB.toString()) {
+    // Self-DM
+    return DirectMessageThread.findOne({
       workspaceId,
-      members: { $all: members, $size: 2 }
+      participants: [userA]
     });
+  }
 
-    if (!thread) {
-      thread = new DirectMessageThread({
-        workspaceId,
-        members
-      });
-      await thread.save();
-    }
+  // Two-person DM
+  return DirectMessageThread.findOne({
+    workspaceId,
+    participants: { $all: [userA, userB], $size: 2 }
+  });
+},
 
-    return thread;
+async createThread({ workspaceId, participants }) {
+  return DirectMessageThread.create({
+    workspaceId,
+    participants
+  });
+}
+,
+  async saveMessage({ threadId, sender, content, files }) {
+    return DirectMessage.create({
+      threadId,
+      sender,
+      content,
+      files
+    });
   },
 
   async getMessagesByThread(threadId) {

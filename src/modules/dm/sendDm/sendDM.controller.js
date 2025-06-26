@@ -1,23 +1,23 @@
-import { sendDMUsecase } from './sendDM.usecase';
-import config from "../../../config/config";
+import { sendDMUsecase } from './sendDM.usecase.js';
+import config from '../../../config/config.js';
 
 export async function sendDirectMessageController(req, res, next) {
   try {
     const senderId = req.user.userId;
-    const { workspaceId, recipientId } = req.body;
-    const files  = (req.files || []).map(f => f.path);
+    const { workspaceId, recipientId, content = '' } = req.body;
+    const files = (req.files || []).map(f => f.path);
 
-    const { message, threadId } = await sendDMUsecase({
+    const { threadId, message } = await sendDMUsecase({
       workspaceId,
       senderId,
       recipientId,
-      content: req.body.content || '',
+      content,
       files
     });
 
-      const messageWithUrls = {
+    const messageWithUrls = {
       ...message.toObject(),
-      files: message.files.map(file => `http://${config.ip}:${config.port}/${file}`)
+      files: message.files.map(f => `http://${config.ip}:${config.port}/${f}`)
     };
 
     res.status(201).json({ threadId, message: messageWithUrls });
