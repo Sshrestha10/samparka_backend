@@ -10,6 +10,12 @@ export const workspaceRepository = {
       { $push: { members: member } }
     );
   },
+  async findWorkspaceByIdAndUpdateChannel(workspaceId, channelId) {
+    return await Workspace.findByIdAndUpdate(
+  workspaceId,
+  { $push: { channels: channelId } }
+)
+  },
   async findWhereMemberEmailNotAccepted(email) {
     return Workspace.find({
       members: {

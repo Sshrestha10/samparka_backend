@@ -21,6 +21,10 @@ export async function createChannelUsecase({ userId, workspaceId, channelName })
     name: channelName,
     createdBy: userId
   });
+  await workspaceRepository.findWorkspaceByIdAndUpdateChannel(
+  workspaceId,
+  channel._id 
+);
 
   return { message: 'Channel created successfully', channel };
 }

@@ -16,6 +16,13 @@ import sendMessageRouter from '../modules/channel/sendMessage/sendMessage.route'
 import getChannelMessageRouter from '../modules/channel/getMessage/getMessage.route';
 import sendDMRouter from '../modules/dm/sendDm/sendDM.routes';
 import getDMRouter from '../modules/dm/getDm/getDM.routes';
+import checkInRouter from '../modules/attendance/checkin/checkin.route';
+import checkoutRouter from '../modules/attendance/checkout/checkout.route';
+import updateAttendanceStatusRouter from '../modules/attendance/updateStatus/updateattendance.route';
+import getAttendanceSummaryRouter from '../modules/attendance/summary/summary.routes';
+import attendanceSummaryRouter from '../modules/attendance/get/getattendance.routes';
+import getWorkspaceDetailsRouter from '../modules/workspace/get/getWorkspaceDetails.route';
+import getChannelsForWorkspaceRouter from '../modules/channel/get/getChannel.route';
 
 
 export default function routes(app, express) {
@@ -27,15 +34,22 @@ export default function routes(app, express) {
 
   //workspace
   app.use('/api/v1/workspace', createWorkspaceRouter(express, authMiddleware));
+  app.use('/api/v1/workspace', getWorkspaceDetailsRouter(express, authMiddleware));
   app.use('/api/v1/workspace', sendInviteRouter(express, authMiddleware));
   app.use('/api/v1/workspace', acceptInviteRouter(express, authMiddleware));
   app.use('/api/v1/workspace', declineInviteRouter(express, authMiddleware));
   app.use('/api/v1/workspace', deleteWorkspaceRouter(express, authMiddleware));
   app.use('/api/v1/workspace', leaveWorkspaceRouter(express, authMiddleware));
   app.use('/api/v1/workspace', createChannelRouter(express, authMiddleware));
+  app.use('/api/v1/workspace', getChannelsForWorkspaceRouter(express, authMiddleware));
   app.use('/api/v1/channel', sendMessageRouter(express, authMiddleware));
   app.use('/api/v1/channel', getChannelMessageRouter(express, authMiddleware));
   app.use('/api/v1/dm', sendDMRouter(express, authMiddleware));
   app.use('/api/v1/dm', getDMRouter(express, authMiddleware));
+  app.use('/api/v1/attendance', checkInRouter(express, authMiddleware));
+  app.use('/api/v1/attendance', checkoutRouter(express, authMiddleware));
+  app.use('/api/v1/attendance', updateAttendanceStatusRouter(express, authMiddleware));
+  app.use('/api/v1/attendance', getAttendanceSummaryRouter(express, authMiddleware));
+  app.use('/api/v1/attendance', attendanceSummaryRouter(express, authMiddleware));
 
 }
